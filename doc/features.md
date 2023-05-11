@@ -10,8 +10,11 @@ Each country have different number of levels and ICU types but mostly in the bas
 
 For turkey there are three different ICU type each of the ICU have different levels, maximum number of level is 5 as in NICU (neonatal). Each extracted featuer is described under levels of each ICU types.
 
-## Extracted Features by ICU Level and MIMIC-III Equivalency 
 
+## Adult Intensive Care (AdICU)
+Patient who are at the age of 18 or greater this statistic also can be extracted from the MIMIC-III on the
+
+### Extraction by Level and MIMIC-III Equivalency
 ICU Level 1:
 
 - Patients with uncomplicated single-organ failures (excluding respiratory failure) can be identified from the diagnosis and procedure codes in the ICU-stay table.
@@ -32,35 +35,6 @@ ICU Level 3:
 - Patients with acute problems such as severe sepsis, septic shock, ARDS, and severe preeclampsia/eclampsia can be identified from the diagnosis and procedure codes in the ICU-stay table.
 - Patients with bleeding that cannot be controlled or requires massive transfusion can be identified from the transfusion events recorded in the procedure events table.
 - Patients with severe central nervous system pathology and surgery can be identified from the diagnosis and procedure codes in the ICU-stay table.
-
-## Adult Intensive Care (AdICU)
-
-Patient who are at the age of 18 or greater this statistic also can be extracted from the MIMIC-III on the
-
-<b><u>Type of organ failure or medical condition:</b></u> This could be extracted from the diagnosis codes (ICD-9 or ICD-10 codes) in the MIMIC-III dataset. MIMIC-III contains both primary and secondary diagnosis codes for each patient.
-
-<b><u>Vital signs:</b></u> MIMIC-III contains a wealth of information on vital signs, including blood pressure, heart rate, respiratory rate, oxygen saturation, and more. These values are often recorded at regular intervals during a patient's ICU stay and could be extracted from the continuous vital sign monitoring data.
-
-<b><u>Laboratory values:</b></u> MIMIC-III contains laboratory values for a wide range of tests, including electrolytes, liver function tests, kidney function tests, coagulation profile, and more. These values are often recorded at regular intervals during a patient's ICU stay and could be extracted from the laboratory data.
-
-<b><u>Use of invasive monitoring or mechanical ventilation:</b></u> This information is available in the MIMIC-III database and could be extracted from the electronic medical record. MIMIC-III contains detailed information on the type and duration of invasive monitoring (such as central venous catheters, arterial lines, and pulmonary artery catheters) as well as the use of mechanical ventilation.
-
-<b><u>Presence of sepsis or other infections:</b></u> MIMIC-III contains information on the presence of infections and sepsis, as well as the type of infection and the organism responsible.
-
-<b><u>Need for isolation precautions:</b></u> This information is available in the MIMIC-III database and could be extracted from the electronic medical record.
-
-<b><u>Glasgow coma score:</b></u> MIMIC-III contains information on the Glasgow coma score, which is typically recorded on admission to the ICU.
-
-<b><u>History of recent surgery or trauma:</b></u> This information is available in the MIMIC-III database and could be extracted from the electronic medical record.
-
-<b><u>Pregnancy status and complications:</b></u> MIMIC-III contains information on pregnancy status and complications, as well as the use of medications and procedures related to pregnancy.
-
-<b><u>Type of poisoning or overdose:</b></u> This information is available in the MIMIC-III database and could be extracted from the electronic medical record.
-
-<b><u>Age and gender:</b></u> MIMIC-III contains demographic information for each patient, including age and gender.
-
-<b><u>Medical history and comorbidities:</b></u> MIMIC-III contains information on medical history and comorbidities, including chronic conditions and prior hospitalizations. This information is typically recorded in the electronic medical record.
-
 
 ## Neonatal Intensive Care (NICU)
 
