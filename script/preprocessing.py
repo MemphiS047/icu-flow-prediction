@@ -1,90 +1,57 @@
 import pandas as pd
-from sklearn.preprocessing import MinMaxScaler, StandardScaler
-from sklearn.decomposition import PCA
-from sklearn.cluster import KMeans
-from sklearn.metrics import silhouette_score
+from sklearn.preprocessing import StandardScaler, LabelEncoder
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.feature_selection import SelectKBest, chi2
+from sklearn.model_selection import train_test_split
 
-# 1. Data cleaning
-def clean_data(df):
-    # Remove duplicates
-    df = df.drop_duplicates()
-    
-    # Handle missing or irrelevant data
-    # ...
-    # from sklearn.impute import KNNImputer
+# Load the data
+data = pd.read_csv('data.csv')  # Replace 'data.csv' with your data file
 
-    # # Data imputation
-    # imputer = KNNImputer(n_neighbors=5)
-    # df_imputed = pd.DataFrame(imputer.fit_transform(df), columns=df.columns)
+# Separate features and target variable
+X = data.drop('target', axis=1)  # Replace 'target' with your target column name
+y = data['target']
 
-    return df
+# Perform train-test split
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)  # Adjust test_size and random_state as needed
 
-# 2. Data normalization/standardization
-def normalize_data(df):
-    scaler = MinMaxScaler()  # or StandardScaler()
-    df_scaled = pd.DataFrame(scaler.fit_transform(df), columns=df.columns)
-    return df_scaled
+# Preprocessing steps for numerical features
+numerical_features = ['numerical_col1', 'numerical_col2']  # Replace with your numerical feature column names
 
-# 3. Feature selection
-def select_features(df):
-    # Perform feature selection techniques
-    # ...
-    
-    return df_selected
+scaler = StandardScaler()
+X_train[numerical_features] = scaler.fit_transform(X_train[numerical_features])
+X_test[numerical_features] = scaler.transform(X_test[numerical_features])
 
-# 4. Feature aggregation
-def aggregate_features(df):
-    # Perform feature aggregation techniques (e.g., one-hot encoding, statistical aggregation)
-    # ...
-    
-    return df_aggregated
+# Preprocessing steps for categorical features
+categorical_features = ['categorical_col1', 'categorical_col2']  # Replace with your categorical feature column names
 
-# 5. Dimensionality reduction
-def reduce_dimensions(df):
-    pca = PCA(n_components=2)  # Set the desired number of components
-    df_reduced = pd.DataFrame(pca.fit_transform(df), columns=['PC1', 'PC2'])
-    return df_reduced
+label_encoder = LabelEncoder()
+for feature in categorical_features:
+    X_train[feature] = label_encoder.fit_transform(X_train[feature].astype(str))
+    X_test[feature] = label_encoder.transform(X_test[feature].astype(str))
 
-# 6. Outlier removal
-def remove_outliers(df):
-    # Identify and remove outliers using appropriate techniques (e.g., box plots, z-score analysis)
-    # ...
-    
-    return df_outliers_removed
+# Preprocessing steps for text features
+text_features = ['text_col1', 'text_col2']  # Replace with your text feature column names
 
-# 7. Sampling (optional)
-def sample_data(df, n_samples):
-    df_sampled = df.sample(n=n_samples)
-    return df_sampled
+tfidf_vectorizer = TfidfVectorizer()
+X_train_text = tfidf_vectorizer.fit_transform(X_train[text_features].astype(str))
+X_test_text = tfidf_vectorizer.transform(X_test[text_features].astype(str))
 
-# 8. Data encoding
-def encode_data(df):
-    # from sklearn.preprocessing import OneHotEncoder, StandardScaler
-    # from sklearn.compose import ColumnTransformer
+# Preprocessing steps for feature selection (optional)
+k = 10  # Specify the number of top features to select
 
-    # # Feature encoding
-    # encoder = ColumnTransformer([('encoder', OneHotEncoder(), ['categorical_feature'])], remainder='passthrough')
-    # df_encoded = pd.DataFrame(encoder.fit_transform(df))
+selector = SelectKBest(chi2, k=k)
+X_train_selected = selector.fit_transform(X_train, y_train)
+X_test_selected = selector.transform(X_test)
 
-    # # Feature scaling
-    # scaler = StandardScaler()
-    # df_scaled = pd.DataFrame(scaler.fit_transform(df), columns=df.columns)
+# Merge preprocessed features
+X_train_processed = pd.concat([X_train_selected, pd.DataFrame(X_train_text.toarray())], axis=1)
+X_test_processed = pd.concat([X_test_selected, pd.DataFrame(X_test_text.toarray())], axis=1)
 
-    
-    return encoded_data
+# Training and evaluation with a machine learning model
+from sklearn.ensemble import RandomForestClassifier  # Replace with your desired model
 
+model = RandomForestClassifier()
+model.fit(X_train_processed, y_train)
+accuracy = model.score(X_test_processed, y_test)
 
-
-# Load the dataset
-df = pd.read_csv('./../data/data-1683746571293.csv')
-
-
-# Preprocessing pipeline
-# df = clean_data(df)
-# df = normalize_data(df)
-# df = select_features(df)
-# df = aggregate_features(df)
-# df = reduce_dimensions(df)
-# df = remove_outliers(df)
-# df = sample_data(df, n_samples=1000)  # Optional
-# encoded_data = encode_data(df)
+print("Accuracy:", accuracy)
