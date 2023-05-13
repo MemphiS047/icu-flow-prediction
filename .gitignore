@@ -1,6 +1,9 @@
 # Ignore datasets
 /data
 
+# Ignore unecessary documents such as regulations which can be found online
+/doc/regulations
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
