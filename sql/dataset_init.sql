@@ -31,3 +31,5 @@ and t1.first_hosp_stay=true;
 -- ### all first day measurements
 -- ### elixhauser could also be inclided
 -- ### include most of the scores martin, lods, meld, mlods, oasis, qsofa, saps, sapsii, sirs, sofa, 
+
+-- JOIN base tables, such as 

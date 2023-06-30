@@ -9,39 +9,34 @@ from imblearn.under_sampling import RandomUnderSampler
 from sklearn.utils import shuffle
 
 # Step 1: Data Collection and Exploration
-# Load the raw data
+## Load the raw data
 data = pd.read_csv('raw_data.csv')
 
-# Perform initial EDA
-# ...
-
 # Step 2: Data Cleaning
-# Handle missing values
+## Handle missing values
 imputer = SimpleImputer(strategy='mean')
 data['column_with_missing_values'] = imputer.fit_transform(data[['column_with_missing_values']])
 
-# Handle duplicate records
+## Handle duplicate records
 data.drop_duplicates(inplace=True)
 
-# Handle inconsistent data
+## Handle inconsistent data
 # ...
 
-# Handle outliers
+## Handle outliers
 # ...
 
 # Step 3: Data Transformation
-# Feature scaling
+## Feature scaling
 scaler = StandardScaler()
 data['numerical_column'] = scaler.fit_transform(data[['numerical_column']])
 
-# Encoding categorical variables
+## Encoding categorical variables
 encoder = OneHotEncoder()
 encoded_data = encoder.fit_transform(data[['categorical_column']])
 
 # Feature engineering
-# ...
-
-# Dimensionality reduction
+## Dimensionality reduction
 pca = PCA(n_components=2)
 reduced_data = pca.fit_transform(data[['numerical_column_1', 'numerical_column_2']])
 
@@ -49,12 +44,12 @@ reduced_data = pca.fit_transform(data[['numerical_column_1', 'numerical_column_2
 # ...
 
 # Step 5: Data Sampling and Splitting
-# Split the dataset into training, validation, and testing sets
+## Split the dataset into training, validation, and testing sets
 train_data, test_data, train_labels, test_labels = train_test_split(data, labels, test_size=0.2, random_state=42)
 train_data, val_data, train_labels, val_labels = train_test_split(train_data, train_labels, test_size=0.2, random_state=42)
 
 # Step 6: Data Normalization and Standardization
-# Normalize numerical features
+## Normalize numerical features
 # ...
 
 # Step 7: Feature Selection
