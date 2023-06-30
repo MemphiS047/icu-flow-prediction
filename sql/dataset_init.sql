@@ -18,12 +18,10 @@ FROM icustay_detail t1
     JOIN rrt_first_day t10 ON t1.icustay_id = t10.icustay_id
     JOIN urine_output_first_day t11 ON t1.icustay_id = t11.icustay_id
     JOIN labs_first_day t12 ON t1.icustay_id = t12.icustay_id
-WHERE first_icu_stay=true 
-and t1.first_hosp_stay=true;
-
+WHERE first_icu_stay = true
+    and t1.first_hosp_stay = true;
 -- ### Weight is problematic since it hasy only icuadm_id
 -- JOIN weight_first_day t9 ON t1.icustay_id=t9.icustay_id
-
 -- ### Tables that could be added
 -- ### admissions table could be added as well since it includes NEW BORN or EMERGANCT etc.
 -- ### angus table includes organ disfunction, infection etc.
@@ -31,5 +29,4 @@ and t1.first_hosp_stay=true;
 -- ### all first day measurements
 -- ### elixhauser could also be inclided
 -- ### include most of the scores martin, lods, meld, mlods, oasis, qsofa, saps, sapsii, sirs, sofa, 
-
--- JOIN base tables, such as 
+-- JOIN base tables, such as
