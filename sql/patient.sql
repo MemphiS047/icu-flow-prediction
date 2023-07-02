@@ -1,6 +1,6 @@
 SET search_path TO mimiciii;
 
-CREATE TABLE refined.base AS (
+CREATE TABLE refined.patient AS (
     SELECT admissions.row_id,
         admissions.subject_id,
         admissions.hadm_id,
@@ -37,8 +37,8 @@ CREATE TABLE refined.base AS (
         icustay_detail.first_hosp_stay,
         icustay_detail.los_icu,
         icustay_detail.icustay_seq,
-        icustay_detail.first_icu_stay
+        icustay_detail.first_icu_stay,
     FROM admissions
         JOIN icustays ON admissions.hadm_id = icustays.hadm_id
         JOIN icustay_detail ON icustays.icustay_id = icustay_detail.icustay_id
-)
+);
