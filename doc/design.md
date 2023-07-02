@@ -64,11 +64,12 @@ The prerpocessing phase is formed of several steps, first data extraction, we ex
 Afterwards the excluded dataset is forwarded to a preprocessing pipeline where missing values, outliers and other preprocessing steps are applied. The outcome of the preprocessing pipeline is the well refined dataset that is ready to be used for modelling.
 
 ## Data Extraction Phase
-For forming the initial dataset different tables are created that each of them have different context
-1) Patient table
-2) First day measurements
-3) Comorbidities 
+Forming the intial datasets or tables we followed similar practice used in MIMIC-Extract paper
 
+1) Base table - includes information related to patients such as age, weight, gender etc.
+2) First stay table - includes realted to first day measurements of the patients
+3) Only features that exists in the regulations
+   
 ## Exclusion Phase
 
 ## Preprocessing Phase

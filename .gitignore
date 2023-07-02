@@ -1,8 +1,11 @@
-# Ignore datasets
-/data
+# For temporarly ignore references
+/doc/references.md
 
 # Ignore unecessary documents such as regulations which can be found online
 /doc/regulations
+
+# Ignore datasets
+/data
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
