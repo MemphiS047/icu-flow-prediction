@@ -69,9 +69,11 @@ Afterwards the excluded dataset is forwarded to a preprocessing pipeline where m
 ## Data Extraction Phase
 Forming the intial datasets or tables we followed similar practice used in MIMIC-Extract paper
 
-1) Base table - includes information related to patients such as age, weight, gender etc.
-2) First stay table - includes realted to first day measurements of the patients
-3) Only features that exists in the regulations
+1) Patient data
+2) First stay data
+3) Severity scores
+4) Medication and treatment data
+5) Features only included in extracted data from regulations
    
 ## Exclusion Phase
 
