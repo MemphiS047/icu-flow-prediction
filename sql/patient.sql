@@ -1,5 +1,4 @@
 SET search_path TO mimiciii;
-
 CREATE TABLE refined.patient AS (
     SELECT admissions.row_id,
         admissions.subject_id,
