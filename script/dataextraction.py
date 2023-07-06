@@ -37,7 +37,7 @@ def connect_to_database():
         return None
 
 # Returns a string of all unique columns across the given table names
-def get_unique_columns(cursor, table_name):
+def get_unique_columns(cursor, table_names):
     """
         Description: Returns a string of all unique columns across the given table names
         cursor: psycopg2 cursor object
@@ -72,10 +72,14 @@ def create_view(cursor, selected_columns, table_names, view_name, foreign_key):
     print(f"Created view {view_clause}")
 
 
+def create_dataset(cursor, table_names):
+    selected_columns = get_unique_columns(cursor, table_names)
+    create_view(cursor, selected_columns, table_names, view_name="refined.base_dataset", foreign_key="icustay_id")
+
 conn = connect_to_database()
 cur = conn.cursor()
 
-first_day_table_names = [
+first_day_tables = [
     "gcs_first_day",
     "height_first_day",
     "urine_output_first_day",
@@ -86,5 +90,12 @@ first_day_table_names = [
     "rrt_first_day",
 ]
 
-selected_columns = get_unique_columns(cur, table_name=first_day_table_names)
-create_view(cur, selected_columns, first_day_table_names, view_name="refined.first_day", foreign_key="icustay_id")
+base_tables = [
+    "patients",
+    "first_day"
+]
+
+create_dataset(cur, base_tables)
+
+# selected_columns = get_unique_columns(cur, table_name=first_day_table_names)
+# create_view(cur, selected_columns, first_day_table_names, view_name="refined.first_day", foreign_key="icustay_id")    
