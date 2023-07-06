@@ -1,6 +1,9 @@
-SET search_path TO mimiciii;
-CREATE TABLE refined.patient AS (
-    SELECT admissions.row_id,
+SET
+    search_path TO mimiciii;
+
+CREATE VIEW refined.patients AS (
+    SELECT
+        admissions.row_id,
         admissions.subject_id,
         admissions.hadm_id,
         admissions.admittime,
@@ -25,6 +28,7 @@ CREATE TABLE refined.patient AS (
         icustays.intime,
         icustays.outtime,
         icustays.los,
+        icustay_detail.icustay_id,
         icustay_detail.gender,
         icustay_detail.dod,
         icustay_detail.los_hospital,
@@ -36,8 +40,9 @@ CREATE TABLE refined.patient AS (
         icustay_detail.first_hosp_stay,
         icustay_detail.los_icu,
         icustay_detail.icustay_seq,
-        icustay_detail.first_icu_stay,
-    FROM admissions
+        icustay_detail.first_icu_stay
+    FROM
+        admissions
         JOIN icustays ON admissions.hadm_id = icustays.hadm_id
         JOIN icustay_detail ON icustays.icustay_id = icustay_detail.icustay_id
 );
