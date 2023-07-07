@@ -110,7 +110,7 @@ base_tables = [
     "first_day"
 ]
 
-create_dataset(cur, base_tables)
+# create_dataset(cur, base_tables)
 
-# selected_columns = get_unique_columns(cur, table_name=first_day_table_names)
-# create_view(cur, selected_columns, first_day_table_names, view_name="refined.first_day", foreign_key="icustay_id")    
+selected_columns = get_unique_columns(cur, table_name=first_day_table)
+create_view(cur, selected_columns, first_day_table, view_name="refined.first_day", foreign_key="icustay_id")    
