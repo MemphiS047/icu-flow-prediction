@@ -2,6 +2,7 @@ import psycopg2
 import dotenv
 import os
 import sqlparse
+import pandas as pd
 
 # Loads the environment variables from the .env file
 dotenv.load_dotenv()
@@ -71,10 +72,24 @@ def create_view(cursor, selected_columns, table_names, view_name, foreign_key):
                       {join_clause}""")
     print(f"Created view {view_clause}")
 
-
+# Creates the base dataset
 def create_dataset(cursor, table_names):
+    """
+        Description: Creates the base dataset
+        cursor: psycopg2 cursor object
+        table_names: list of table names to join, not that they should be based on refined schema
+    """
     selected_columns = get_unique_columns(cursor, table_names)
     create_view(cursor, selected_columns, table_names, view_name="refined.base_dataset", foreign_key="icustay_id")
+
+def get_base_dataset(cursor):
+    """
+        Description: Returns the base dataset
+        cursor: psycopg2 cursor object
+    """
+    cursor.execute("SELECT * FROM refined.base_dataset")
+    return cursor.fetchall()
+
 
 conn = connect_to_database()
 cur = conn.cursor()
