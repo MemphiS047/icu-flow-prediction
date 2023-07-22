@@ -7,10 +7,13 @@ from sklearn.model_selection import train_test_split
 from imblearn.over_sampling import RandomOverSampler
 from imblearn.under_sampling import RandomUnderSampler
 from sklearn.utils import shuffle
+from preprocessing import connect_database, get_base_dataset
 
-# Step 1: Data Collection and Exploration
-## Load the raw data
-data = pd.read_csv('raw_data.csv')
+# # Step 1: Data Collection and Exploration
+# ## Load the raw data
+# conn = connect_database()
+# cur = conn.cursor()
+# df = get_base_dataset(cur)
 
 # Step 2: Data Cleaning
 ## Handle missing values

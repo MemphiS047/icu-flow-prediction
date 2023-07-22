@@ -31,6 +31,10 @@ def connect_to_database():
     try:
         conn = psycopg2.connect(dbname=dbname, user=user, password=password, host=host, port=port)
         print("Connected to the PostgreSQL database")
+        cur = conn.cursor()
+        cur.execute("SELECT version();")
+        print(f"PostgreSQL version: {cur.fetchone()[0]}")
+        cur.close()
         return conn
 
     except psycopg2.Error as e:
@@ -82,35 +86,34 @@ def create_dataset(cursor, table_names):
     selected_columns = get_unique_columns(cursor, table_names)
     create_view(cursor, selected_columns, table_names, view_name="refined.base_dataset", foreign_key="icustay_id")
 
-def get_base_dataset(cursor):
+# Returns the base dataset
+def get_base_dataset(cursor, conn):
     """
         Description: Returns the base dataset
         cursor: psycopg2 cursor object
     """
-    cursor.execute("SELECT * FROM refined.base_dataset")
-    return cursor.fetchall()
+    df = pd.read_sql_query("SELECT * FROM refined.base_dataset", conn)
+    return df
 
+# conn = connect_to_database()
+# cur = conn.cursor()
 
-conn = connect_to_database()
-cur = conn.cursor()
+# first_day_tables = [
+#     "gcs_first_day",
+#     "height_first_day",
+#     "urine_output_first_day",
+#     "ventilation_first_day",
+#     "vitals_first_day",
+#     "weight_first_day",
+#     "labs_first_day",
+#     "rrt_first_day",
+# ]
 
-first_day_tables = [
-    "gcs_first_day",
-    "height_first_day",
-    "urine_output_first_day",
-    "ventilation_first_day",
-    "vitals_first_day",
-    "weight_first_day",
-    "labs_first_day",
-    "rrt_first_day",
-]
-
-base_tables = [
-    "patients",
-    "first_day"
-]
+# base_tables = [
+#     "patients",
+#     "first_day"
+# ]
 
 # create_dataset(cur, base_tables)
-
-selected_columns = get_unique_columns(cur, table_name=first_day_table)
-create_view(cur, selected_columns, first_day_table, view_name="refined.first_day", foreign_key="icustay_id")    
+# selected_columns = get_unique_columns(cur, table_name=first_day_table)
+# create_view(cur, selected_columns, first_day_table, view_name="refined.first_day", foreign_key="icustay_id")    

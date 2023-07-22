@@ -54,9 +54,6 @@ Additional Advanced Methodologies or Solutions:
 8. User-centered design: Conduct user research and involve healthcare professionals in the design process of the "heartbeat" software system, ensuring that it meets their specific needs and workflows.
 9. Cloud-based architecture: Implement a cloud-based infrastructure for the "heartbeat" software system, enabling scalability, accessibility, and efficient data storage and processing.
 
-## Feature Extraction from Regulations
-We extracted features from the regulations of UK, US and TR, with text mining techniques, table below shows the extacted features
-
 # Preprocessing
 The prerpocessing phase is formed of several steps, first data extraction, we extract related tables from MIMIC-III, these tables are not just randomaly picked but rather finalzied on extensive literature review and from the related features that correpsonds to the features in the MIMIC-III's related tables, once the initial dataset is formed we apply set of exclusion criterias for 3 reasons:
 
@@ -140,6 +137,9 @@ Ensemble learning combines multiple individual models (base learners) to create 
 1. **Ordinal Regression**: Ordinal regression is a technique specifically designed for predicting ordinal variables, such as ICU levels. It models the relationship between the predictors (including mortality rate) and the ordinal outcome. This approach takes into account the inherent ordering of the ICU levels and can provide more nuanced predictions compared to simple intervals.
 
 # Evaluation
+## Evaluation Metrics
+## Evaluation Techniques
+## Evaluation Results
 
 # Heartbeat Backend
 
