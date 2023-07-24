@@ -1,3 +1,4 @@
+from sqlalchemy import create_engine
 import psycopg2
 import dotenv
 import os
@@ -86,17 +87,26 @@ def create_dataset(cursor, table_names):
     selected_columns = get_unique_columns(cursor, table_names)
     create_view(cursor, selected_columns, table_names, view_name="refined.base_dataset", foreign_key="icustay_id")
 
-# Returns the base dataset
-def get_base_dataset(cursor, conn):
+# def get_base_dataset(cursor, conn):
+#     """
+#         Description: Returns the base dataset
+#         cursor: psycopg2 cursor object
+#     """
+#     engine = create_engine(conn.dsn)
+#     df = pd.read_sql_query("SELECT * FROM refined.base_dataset", engine)
+#     return df
+
+def get_base_dataset(conn):
     """
         Description: Returns the base dataset
-        cursor: psycopg2 cursor object
+        conn: psycopg2 connection object
     """
-    df = pd.read_sql_query("SELECT * FROM refined.base_dataset", conn)
+    engine = create_engine(f"postgresql+psycopg2://", creator=lambda: conn)
+    df = pd.read_sql_query("SELECT * FROM refined.base_dataset", engine)
     return df
 
-# conn = connect_to_database()
-# cur = conn.cursor()
+conn = connect_to_database()
+cur = conn.cursor()
 
 # first_day_tables = [
 #     "gcs_first_day",
