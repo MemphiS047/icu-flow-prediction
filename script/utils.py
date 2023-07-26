@@ -23,3 +23,11 @@ def remove_min_max_columns(df):
     mean_columns = [col for col in df.columns if '_mean' in col]
     df = df[mean_columns]
     return df
+
+def get_one_to_many_relationship_columns(df):
+    subject_id_counts = df.groupby('subject_id').size()    
+    one_to_many_subject_ids = subject_id_counts[subject_id_counts > 1].index.tolist()    
+    one_to_many_df = df[df['subject_id'].isin(one_to_many_subject_ids)]    
+    one_to_many_columns = list(one_to_many_df.columns)    
+    one_to_many_columns.remove('subject_id')
+    return one_to_many_columns

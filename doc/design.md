@@ -63,6 +63,8 @@ The prerpocessing phase is formed of several steps, first data extraction, we ex
 
 Afterwards the excluded dataset is forwarded to a preprocessing pipeline where missing values, outliers and other preprocessing steps are applied. The outcome of the preprocessing pipeline is the well refined dataset that is ready to be used for modelling.
 
+Preprocessing script could me more moduler with decorators such as we can plug different tasks or forward output to multiple tasks in the pipeline
+
 ## Data Extraction Phase
 Forming the intial datasets or tables we followed similar practice used in MIMIC-Extract paper
 
