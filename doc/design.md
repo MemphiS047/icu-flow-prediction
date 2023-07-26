@@ -65,6 +65,11 @@ Afterwards the excluded dataset is forwarded to a preprocessing pipeline where m
 
 Preprocessing script could me more moduler with decorators such as we can plug different tasks or forward output to multiple tasks in the pipeline
 
+Might include excluded or removed columns for further insigth in the dataset removed columns are as follows on preprocessing stages
+- columns_to_remove = ['language', 'religion', 'diagnosis', 'ethnicity']
+- columns_to_remove = ['height_echo', 'weight_echoinhosp', 'weight_echoprehosp', 'dbsource']
+- columns_to_remove = ['intime', 'outtime', 'dod', 'admittime', 'dischtime', 'deathtime', 'edregtime', 'edouttime']
+
 ## Data Extraction Phase
 Forming the intial datasets or tables we followed similar practice used in MIMIC-Extract paper
 
