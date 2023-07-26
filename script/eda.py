@@ -23,9 +23,6 @@ print(df.info())
 print(df.describe())
 print(df.corr())
 
-# Data visualization
-# ...
-
 # Pairwise relationships using scatter plots
 sns.pairplot(df)
 plt.show()
