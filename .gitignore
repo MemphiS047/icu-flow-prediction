@@ -1,6 +1,9 @@
 # For temporarly ignore references
 /doc/references.md
 
+# Ignroe TODO
+TODO.md
+
 # Ignore unecessary documents such as regulations which can be found online
 /doc/regulations
 
