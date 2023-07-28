@@ -4,15 +4,12 @@ The design is conformed of several explanations on the things that are aim to be
 # Flow of the Development
 The flow of the development is divided into building the ML models, developing backend for easy to deploy with different type of technologies that are used by the hospital systems (an intermediary system) and additional frontend for developed on request of the doctors: Analysis - Preprocessing - Modelling - Evaluation - Hearbeat backend (model deployment - architecture decisions) - Frontend (Case Study - Optional)
 
-
-
 # Analysis
-Problem: There is a cost disparity between ICU payments and Insurance payments due to ineffective application of official ICU regulations. These regulations determine which ICU level will the patient be in. For insurance agency to pay for the ICU spending it is important to know why patient is admitted to that ICU and needs some grounding on that. Reporting and documenting is inefficient since doctors use their own predefined templates hence there is no systematic and automated report generation mechanism exists
+**Problem**: There is a cost disparity between ICU payments and Insurance payments due to ineffective application of official ICU regulations. These regulations determine which ICU level will the patient be in. For insurance agency to pay for the ICU spending it is important to know why patient is admitted to that ICU and needs some grounding on that. Reporting and documenting is inefficient since doctors use their own predefined templates hence there is no systematic and automated report generation mechanism exists.
 
-Solution: We introduce a supportive machine learning model that will help doctors in the grey areas also model should be flexible for variations in ICU regulatory changes in the future. For the report generation and more suitable ICU management solutions we propose a software system that could be generalized to rest of the ICU wards named "heartbeat" where it includes a set of choices refined for the related regulations this software could be generalized in terms of the UI elements, it should be user friendly and efficient for doctors and healthcare professionals but most importantly it should be "plug-and-run" style such that it should be easily configurable to different hospitals, and regulatory systems.
+**Solution**: We introduce a supportive machine learning model that will help doctors in the grey areas also model should be flexible for variations in ICU regulatory changes in the future. For the report generation and more suitable ICU management solutions we propose a software system that could be generalized to rest of the ICU wards named "heartbeat" where it includes a set of choices refined for the related regulations this software could be generalized in terms of the UI elements, it should be user friendly and efficient for doctors and healthcare professionals but most importantly it should be "plug-and-run" style such that it should be easily configurable to different hospitals, and regulatory systems.
 
-Research Questions:
-
+**Research Questions**
 1. How can machine learning models be applied to assist doctors in the decision-making process for ICU admissions, particularly in cases where the regulations are unclear or flexible?
 
 2. What features and data sources can be used to develop a machine learning model that accurately predicts the appropriate ICU level for patients?
@@ -31,7 +28,7 @@ Research Questions:
 
 9. What are the user interface (UI) elements and design considerations that need to be incorporated into the "heartbeat" software system to ensure usability and efficiency for doctors and healthcare professionals?
 
-## Additional Included Value
+**Additional Included Value**
 1.  We can extract additional features from the regulations of UK, US and TR.
 
 2.  If there is such data on the MIMIC-III, using those we can generate target features and then train with the resulted dataset
@@ -42,25 +39,7 @@ Research Questions:
 
 5.  Distinction could be made between PICU, NICU and other ICU types as well and benefits of it could be explained in the paper
 
-## Additional Advanced Methodologies or Solutions:
-
-1. Advanced machine learning algorithms: Explore advanced algorithms such as deep learning models (e.g., convolutional neural networks, recurrent neural networks) or ensemble methods to improve the accuracy and robustness of the ICU level prediction model.
-
-2. Explainable AI: Develop interpretable machine learning models that provide explanations or justifications for the decisions made, enhancing trust and transparency in the system.
-
-3. Real-time monitoring: Implement a real-time monitoring system that continuously tracks ICU occupancy and patient conditions, providing timely alerts and recommendations to doctors for appropriate ICU level assignments.
-
-4. Reinforcement learning: Investigate the use of reinforcement learning techniques to optimize ICU management policies and dynamically adapt to changing regulations or conditions.
-
-5. Natural language processing (NLP): Utilize NLP techniques to automate the extraction of relevant information from doctors' predefined templates and generate standardized reports, improving efficiency and consistency in reporting.
-
-6. Data integration and interoperability: Develop solutions to integrate and exchange data seamlessly between different hospital management software systems, ensuring efficient data flow for report generation and ICU management.
-
-7. Decision support system: Build a comprehensive decision support system that incorporates clinical guidelines, patient-specific data, and machine learning predictions to assist doctors in making informed decisions regarding ICU admissions.
-
-8. User-centered design: Conduct user research and involve healthcare professionals in the design process of the "heartbeat" software system, ensuring that it meets their specific needs and workflows.
-
-9. Cloud-based architecture: Implement a cloud-based infrastructure for the "heartbeat" software system, enabling scalability, accessibility, and efficient data storage and processing.
+6. We can some advacned explanability methodologies on the model to help with the insurance reporting
 
 # Preprocessing
 The prerpocessing phase is formed of several steps, first data extraction, we extract related tables from MIMIC-III, these tables are not just randomaly picked but rather finalzied on extensive literature review and from the related features that correpsonds to the features in the MIMIC-III's related tables, once the initial dataset is formed we apply set of exclusion criterias for 3 reasons:
