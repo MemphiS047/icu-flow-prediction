@@ -87,15 +87,7 @@ def create_dataset(cursor, table_names):
     selected_columns = get_unique_columns(cursor, table_names)
     create_view(cursor, selected_columns, table_names, view_name="refined.base_dataset", foreign_key="icustay_id")
 
-# def get_base_dataset(cursor, conn):
-#     """
-#         Description: Returns the base dataset
-#         cursor: psycopg2 cursor object
-#     """
-#     engine = create_engine(conn.dsn)
-#     df = pd.read_sql_query("SELECT * FROM refined.base_dataset", engine)
-#     return df
-
+# Get the base dataset
 def get_base_dataset(conn):
     """
         Description: Returns the base dataset
@@ -124,6 +116,14 @@ cur = conn.cursor()
 #     "first_day"
 # ]
 
+all_scores_patient = [
+    "all_scores",
+    "refined.patients",
+]
+
+
+
 # create_dataset(cur, base_tables)
-# selected_columns = get_unique_columns(cur, table_name=first_day_table)
-# create_view(cur, selected_columns, first_day_table, view_name="refined.first_day", foreign_key="icustay_id")    
+selected_columns = get_unique_columns(cur, table_names=all_scores_patient)
+print(selected_columns)
+# create_view(cur, selected_columns, first_day_table, view_name="refined.first_day", foreign_key="icustay_id")

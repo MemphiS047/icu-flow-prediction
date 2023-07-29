@@ -66,6 +66,8 @@ Forming the intial datasets or tables we followed similar practice used in MIMIC
 3) Severity scores
 4) Medication and treatment data
 5) Features only included in extracted data from regulations
+
+- Tables that might be useful = ['martin', '']
    
 ## Exclusion Phase
 
@@ -131,6 +133,20 @@ Ensemble learning combines multiple individual models (base learners) to create 
 
 3. **Voting Based Approach**
 
+## Post-Modeling Phase
+Once the clustering and supervised based approaches are done, first of all compare results of each of them within each category then comapre the clustring results with the labeling methodology, below steps could be followed
+
+1. Calculate Mortality Rates: First, calculate the mortality rate for each patient in your dataset. The mortality rate is typically the percentage of patients who died in the ICU.
+
+2. Assign Labels based on Mortality Rate: Define the ICU level labels based on mortality rates. For example, you can create different ICU levels such as "Low Risk," "Medium Risk," and "High Risk" based on certain mortality rate thresholds.
+
+3. Map Patients to Clusters: Map each patient to the corresponding cluster obtained from your clustering algorithm. You should have cluster labels for each patient after performing the clustering.
+
+4. Aggregate Mortality Rates within Clusters: Calculate the average or median mortality rate for each cluster. This will give you an idea of the overall mortality rate within each cluster.
+
+5. Assign ICU Level Labels to Clusters: Based on the mortality rates calculated in step 4, assign the appropriate ICU level label to each cluster. For example, if a cluster has a high mortality rate, you can assign it the "High Risk" ICU level label.
+
+6. Relate ICU Level Labels to Patients: Finally, relate the ICU level labels assigned to clusters back to the individual patients within those clusters. This will give you the ICU level prediction for each patient based on their clustering assignment and the corresponding mortality rates.
 
 # Evaluation
 ## Evaluation Metrics
