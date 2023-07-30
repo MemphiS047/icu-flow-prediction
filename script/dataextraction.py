@@ -50,11 +50,13 @@ def get_unique_columns(cursor, table_names):
         table_names: list of table names to join
     """
     unique_table_column = {}
-    for table_name in table_names:
-        cursor.execute(f"SELECT column_name FROM information_schema.columns WHERE table_name = '{table_name}'")
+    for table in table_names:
+        cursor.execute(f"""SELECT column_name FROM information_schema.columns 
+                       WHERE table_schema = '{table["schema"]}'
+                       AND table_name = '{table["name"]}'""")      
         columns = [column[0] for column in cursor.fetchall()]
         for column in columns:
-            unique_table_column[column] = table_name
+            unique_table_column[column] = table["schema"] + "." + table["name"]
     result = ', '.join(f"{value}.{key}" for key, value in unique_table_column.items())
     return result
 
@@ -68,12 +70,11 @@ def create_view(cursor, selected_columns, table_names, view_name, foreign_key):
         view_name: name of the view to create
         foreign_key: name of the foreign key to join on
     """
-    join_conditions = [f"{table}.{foreign_key} = {table_names[0]}.{foreign_key}" for table in table_names[1:]]
-    join_clause = "\n".join(f"JOIN {table} ON {join_condition}" for table, join_condition in zip(table_names[1:], join_conditions))
-    
+    join_conditions = [f"{table['schema']}.{table['name']}.{foreign_key} = {table_names[0]['schema']}.{table_names[0]['name']}.{foreign_key}" for table in table_names[1:]]
+    join_clause = "\n".join(f"JOIN {table['schema']}.{table['name']} ON {join_condition}" for table, join_condition in zip(table_names[1:], join_conditions))
     view_clause = (f"""CREATE VIEW {view_name} AS 
                       SELECT {selected_columns} 
-                      FROM {table_names[0]}
+                      FROM {table_names[0]['schema']}.{table_names[0]['name']}
                       {join_clause}""")
     print(f"Created view {view_clause}")
 
@@ -116,14 +117,15 @@ cur = conn.cursor()
 #     "first_day"
 # ]
 
-all_scores_patient = [
-    "all_scores",
-    "refined.patients",
+everyscore_patient = [
+    {"schema":"refined", "name":"patients"},
+    {"schema":"mimiciii", "name":"everyscore"},
 ]
 
 
 
 # create_dataset(cur, base_tables)
-selected_columns = get_unique_columns(cur, table_names=all_scores_patient)
-print(selected_columns)
+selected_columns = get_unique_columns(cur, table_names=everyscore_patient)
+create_view (cur, selected_columns, everyscore_patient, view_name="refined.everyscore_patient", foreign_key="icustay_id")
+# print(selected_columns)
 # create_view(cur, selected_columns, first_day_table, view_name="refined.first_day", foreign_key="icustay_id")
