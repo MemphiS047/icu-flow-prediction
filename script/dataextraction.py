@@ -98,6 +98,13 @@ def get_base_dataset(conn):
     df = pd.read_sql_query("SELECT * FROM refined.base_dataset", engine)
     return df
 
+
+def get_table_as_dataset(conn, table_name):
+    engine = create_engine(f"postgresql+psycopg2://", creator=lambda: conn)
+    df = pd.read_sql_query(f"SELECT * FROM {table_name['schema']}.{table_name['name']}", engine)
+    return df
+
+
 conn = connect_to_database()
 cur = conn.cursor()
 
@@ -117,15 +124,17 @@ cur = conn.cursor()
 #     "first_day"
 # ]
 
-everyscore_patient = [
-    {"schema":"refined", "name":"patients"},
-    {"schema":"mimiciii", "name":"everyscore"},
-]
 
 
+# everyscore_patient = [
+#     {"schema":"refined", "name":"patients"},
+#     {"schema":"mimiciii", "name":"everyscore"},
+# ]
 
+
+get_table_as_dataset(conn, {"schema":"refined", "name":"everyscore_patient"})
 # create_dataset(cur, base_tables)
-selected_columns = get_unique_columns(cur, table_names=everyscore_patient)
-create_view (cur, selected_columns, everyscore_patient, view_name="refined.everyscore_patient", foreign_key="icustay_id")
+# selected_columns = get_unique_columns(cur, table_names=everyscore_patient)
+# create_view (cur, selected_columns, everyscore_patient, view_name="refined.everyscore_patient", foreign_key="icustay_id")
 # print(selected_columns)
 # create_view(cur, selected_columns, first_day_table, view_name="refined.first_day", foreign_key="icustay_id")
