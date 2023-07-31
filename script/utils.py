@@ -1,4 +1,7 @@
-# Returns columns without mean columns (e.g. 'column_min', 'column_max') and missing mean columns (e.g. 'column_mean').
+import dataextraction as de
+import mrmapping as mr
+import numpy as np
+
 def detect_missing_mean_columns(df):
     missing_mean_cols = []
     for column in df.columns:
@@ -8,17 +11,14 @@ def detect_missing_mean_columns(df):
                 missing_mean_cols.append((column, mean_column))
     return missing_mean_cols
 
-# Calculates mean values
 def calculate_mean(row, min_col, max_col):
     return (row[min_col] + row[max_col]) / 2
 
-# Adds missing mean columns to the dataframe given the returned list of mean columns
 def add_missing_mean_columns(df, missing_mean_cols):
     for min_col, mean_col in missing_mean_cols:
         df[mean_col] = df.apply(lambda row: calculate_mean(row, min_col, min_col.replace('_min', '_max')), axis=1)
     return df
 
-# Removes min and max columns
 def remove_min_max_columns(df):
     mean_columns = [col for col in df.columns if '_mean' in col]
     df = df[mean_columns]
@@ -31,3 +31,42 @@ def get_one_to_many_relationship_columns(df):
     one_to_many_columns = list(one_to_many_df.columns)    
     one_to_many_columns.remove('subject_id')
     return one_to_many_columns
+
+def aggregate_score_to_mortality():
+    conn = de.connect_to_database()
+    df = de.get_table_as_dataset(conn, {'schema': 'refined', 'name': 'everyscore_patient'})
+    df['mr_lods'] = df['lods'].apply(map_lods)    
+    return df.loc[:, ['subject_id', 'mr_lods']]
+   
+def map_mortality_rate_to_icu_level(mortality_rate):    
+    if 0 < mortality_rate < 0.33:
+        return 'Level 1'
+    elif 0.33 <= mortality_rate < 0.66:
+        return 'Level 2'
+    elif 0.66 <= mortality_rate < 0.99:
+        return 'Level 3'
+    else:
+        return 'Unknown'
+
+def map_sapsii(score):
+    logit = -7.7631 + 0.0737 * (score) + 0.9971 *  (np.log(score+1))
+    return (np.exp(logit)) / (1 + np.exp(logit))
+
+def map_lods(score):
+     logit = -3.4043 + 0.4173 * (score)
+     return (np.exp(logit)) / (1 + np.exp(logit))
+
+def map_apsiii():
+    pass
+
+def map_oasis():
+    pass
+
+def weighted_average():
+    pass
+
+def average_mr():
+    pass
+
+
+# df['icu_level'] = df['mr_lods'].apply(map_mortality_to_icu_level)

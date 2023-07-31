@@ -6,7 +6,7 @@ def map_sapsii(score):
 
 
 def map_lods(score):
-     logit = -3.4043 + 0.4173(score)
+     logit = -3.4043 + 0.4173 * (score)
      return (np.exp(logit)) / (1 + np.exp(logit))
 
 def map_apsiii():

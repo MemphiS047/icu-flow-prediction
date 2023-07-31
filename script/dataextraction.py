@@ -8,7 +8,6 @@ import pandas as pd
 # Loads the environment variables from the .env file
 dotenv.load_dotenv()
 
-# Formats the given SQL query
 def format_sql(sql):
     """
         Description: Formats the given SQL query
@@ -18,7 +17,6 @@ def format_sql(sql):
     formatted = sqlparse.format(str(parsed[0]), reindent=True, keyword_case='upper')
     return formatted
 
-# Connects to the database and returns the connection object
 def connect_to_database():
     """
         Description: Connects to the database and returns the connection object
@@ -41,8 +39,7 @@ def connect_to_database():
     except psycopg2.Error as e:
         print("Error connecting to the PostgreSQL database:", e)
         return None
-
-# Returns a string of all unique columns across the given table names
+    
 def get_unique_columns(cursor, table_names):
     """
         Description: Returns a string of all unique columns across the given table names
@@ -60,7 +57,6 @@ def get_unique_columns(cursor, table_names):
     result = ', '.join(f"{value}.{key}" for key, value in unique_table_column.items())
     return result
 
-# Creates view from the given table names and selected columns
 def create_view(cursor, selected_columns, table_names, view_name, foreign_key):
     """
         Description: Creates view from the given table names and selected columns
@@ -78,7 +74,6 @@ def create_view(cursor, selected_columns, table_names, view_name, foreign_key):
                       {join_clause}""")
     print(f"Created view {view_clause}")
 
-# Creates the base dataset
 def create_dataset(cursor, table_names):
     """
         Description: Creates the base dataset
@@ -88,7 +83,6 @@ def create_dataset(cursor, table_names):
     selected_columns = get_unique_columns(cursor, table_names)
     create_view(cursor, selected_columns, table_names, view_name="refined.base_dataset", foreign_key="icustay_id")
 
-# Get the base dataset
 def get_base_dataset(conn):
     """
         Description: Returns the base dataset
@@ -105,8 +99,8 @@ def get_table_as_dataset(conn, table_name):
     return df
 
 
-conn = connect_to_database()
-cur = conn.cursor()
+# conn = connect_to_database()
+# cur = conn.cursor()
 
 # first_day_tables = [
 #     "gcs_first_day",
@@ -132,7 +126,7 @@ cur = conn.cursor()
 # ]
 
 
-get_table_as_dataset(conn, {"schema":"refined", "name":"everyscore_patient"})
+# get_table_as_dataset(conn, {"schema":"refined", "name":"everyscore_patient"})
 # create_dataset(cur, base_tables)
 # selected_columns = get_unique_columns(cur, table_names=everyscore_patient)
 # create_view (cur, selected_columns, everyscore_patient, view_name="refined.everyscore_patient", foreign_key="icustay_id")
