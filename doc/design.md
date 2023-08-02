@@ -96,7 +96,7 @@ Depending on the approach there are few models that we can use these models are 
 
 9. PCA + t-SNE (or UMAP) Combination: You can first use PCA to reduce the dimensionality to a manageable number of components (e.g., 10-20), and then apply t-SNE or UMAP for further reduction to 2D.
 
-## Unsupervised Approach
+## Unsupervised Approach (Clustering)
 Let's go through each of the models and techniques, providing a brief explanation of how they work:
 
 1. **Self-Organizing Maps (SOMs)**:
@@ -125,7 +125,7 @@ GMMs are probabilistic models used for clustering and density estimation. They a
 
 10. **Birch (Balanced Iterative Reducing and Clustering using Hierarchies)**: Birch is a hierarchical clustering algorithm that can efficiently handle large datasets. It constructs a tree-based representation of the data to perform clustering.
 
-## Supervised Approach
+## Supervised Approach (Classification)
 1. **Ordinal Regression**: Ordinal regression is a technique specifically designed for predicting ordinal variables, such as ICU levels. It models the relationship between the predictors (including mortality rate) and the ordinal outcome. This approach takes into account the inherent ordering of the ICU levels and can provide more nuanced predictions compared to simple intervals.
 
 2. **Ensemble Learning Models (GBM, XGBoost, LightGBM, CatBoost, Random Forest, etc.)**:
@@ -154,5 +154,48 @@ Once the clustering and supervised based approaches are done, first of all compa
 ## Evaluation Results
 
 # Heartbeat Backend
+Main objective of the heartbeat backend is to find solution for easly deployment of the system to any other hospital IT infrastructure assuming the hospital is not using standarized systems such as HL7, FHIR. To accomplish this we implemented a standarized module based middleware layer that provides easy adaptation to our system and translation of different soruces.
+
+## Architecture
+Below is the proposed architecture for the defined main objective of the Heartbeat Backend above, it consists of layers, .....
+...
+...
+...
+...
+...
++-------------------------------------------------------------------------------------+
+|                                                                                     |
+|                                                                                     |
+|                                                                                     |
+|                                                                                     |
+|                                                                                     |
+|                                                                                     |
+|                                                                                     |
+|                                                                                     |
+|                                                                                     |
+|                                                                                     |
+|                                                                                     |
+|                                                                                     |
+|                                                                                     |
+|                                                                                     |
+|                                                                                     |
+|                                                                                     |
+|                                                                                     |
+|                                                                                     |
+|                                                                                     |
+|                                                                                     |
+|                                                                                     |
+|                                                                                     |
+|                                                                                     |
+|                                                                                     |
+|                                                                                     |
+|                                                                                     |
+|                                                                                     |
++-------------------------------------------------------------------------------------+
+
+
+
+## Proposed Standarized Middleware Framework Specifically Tailored for ICU Systems
+
 
 # Frontend (Case Study)
