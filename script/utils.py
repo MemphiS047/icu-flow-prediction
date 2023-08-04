@@ -1,8 +1,10 @@
 import dataextraction as de
 import mrmapping as mr
+import pandas as pd
 import numpy as np
 import dotenv
 import os
+
 
 dotenv.load_dotenv()
 
@@ -58,12 +60,15 @@ def map_mortality_rate_to_icu_level(mortality_rate):
 def generate_csv_file_name():
     data_dir = f"{os.getenv('ROOT_DIR')}\\data\\"
     for i in range(1, 10):        
-        file_name = f"cached_dataset_{i}.csv"
+        file_name = f"cached_dataset_{i}"
         if not os.path.exists(data_dir + file_name):
             return file_name
 
-def cache_database(df):
+def cache_database(df, name=None):
+    if(type(df) != type(pd.DataFrame())):
+        raise TypeError("Dataframe must be of type pandas.DataFrame")    
     name = generate_csv_file_name()
+    print(f"Caching dataset to {os.getenv('ROOT_DIR')}\\data\\{name}.csv")
     df.to_csv(f'{os.getenv("ROOT_DIR")}\\data\\{name}.csv', index=False)             
 
 

@@ -12,7 +12,6 @@ from sklearn.preprocessing import StandardScaler
 # from sklearn.mixture import GaussianMixture
 # from sklearn.cluster import DBSCAN, SpectralClustering, KMeans, Birch
 # import hdbscan
-from category_encoders.binary import BinaryEncoder
 
 def load_data():  
     conn = db.connect_to_database()
@@ -27,6 +26,8 @@ def check_duplicate_patient(df, cache=False, verbose=False):
             print("Number of duplicate subjects {}".format(duplicate_num))
         if(cache):
             utils.cache_database(df)
+    else:
+        print("No duplicate subjects")
     return df
 
 def get_first_icu_stay(df, cache=False, verbose=False):    
@@ -34,7 +35,6 @@ def get_first_icu_stay(df, cache=False, verbose=False):
     if(verbose):        
         print("Getting first ICU stay...")
         print("Number of rows {}".format(len(df)))
-        check_duplicate_patient(df, verbose=True)
     if(cache):
         utils.cache_database(df)
     return df
@@ -45,7 +45,6 @@ def aggregate_missing_mean_columns(df, cache=False, verbose=False):
     if(verbose):       
         print("Aggregating missing mean columns...")
         print("Number of rows {}".format(len(df)))
-        check_duplicate_patient(df, verbose=True)
         for col in missing_mean_columns:
             print("Added column {}".format(col[1]))
     if(cache):
@@ -66,7 +65,6 @@ def aggregate_repeated_mean_measuremenets(df, cache=False, verbose=False):
     if(verbose):       
         print("Aggregating repeated mean measurements...")
         print("Number of rows {}".format(len(df)))
-        check_duplicate_patient(df, verbose=True)
         for col in df_aggregated.columns:
             print("Aggregated column {}".format(col))                    
     if(cache):
@@ -78,7 +76,6 @@ def remove_unecessary_columns(df, columns_to_remove, cache=False, verbose=False)
     if(verbose):   
         print("Removing unecessary columns...")
         print("Number of rows {}".format(len(df)))
-        check_duplicate_patient(df, verbose=True)
         for col in columns_to_remove:
             print("Removed column {}".format(col))
     if(cache):
@@ -97,7 +94,6 @@ def remove_features_with_most_null(df, cache=False, verbose=False):
     if(verbose):      
         print("Removing features with most null...")
         print("Number of rows {}".format(len(df)))
-        check_duplicate_patient(df, verbose=True)
         for col in columns_to_remove:
             print("Removed column {}".format(col))
     if(cache):
@@ -105,11 +101,11 @@ def remove_features_with_most_null(df, cache=False, verbose=False):
     return df
 
 def encode_binary(df, columns_to_encode, cache=False, verbose=False):
-    df = BinaryEncoder(cols=columns_to_encode, return_df=True).fit_transform(df)
+    for col in columns_to_encode:
+        df[col] = df[col].map({'M': 0, 'F': 1})
     if(verbose):  
         print("Encoding binary...")
         print("Number of rows {}".format(len(df)))
-        check_duplicate_patient(df, verbose=True)
         for col in columns_to_encode:
             print("Encoded column {}".format(col))
     if(cache):
@@ -123,7 +119,6 @@ def encode_frequency(df, columns_to_encode, cache=False, verbose=False):
     if(verbose):
         print("Encoding frequency...")
         print("Number of rows {}".format(len(df)))
-        check_duplicate_patient(df, verbose=True)
         for col in columns_to_encode:
             print("Encoded column {}".format(col))
     if(cache):
@@ -135,7 +130,6 @@ def encode_one_hot(df, columns_to_encode, cache=False, verbose=False):
     if(verbose):      
         print("Encoding one hot...")
         print("Number of rows {}".format(len(df)))
-        check_duplicate_patient(df, verbose=True)
         for col in columns_to_encode:
             print("Encoded column {}".format(col))
     if(cache):
@@ -147,7 +141,6 @@ def drop_rows_including_null(df, cache=False, verbose=False):
     if(verbose):
         print("Dropping rows including null...")
         print("Number of rows {}".format(len(df)))
-        check_duplicate_patient(df, verbose=True)
     if(cache):
         utils.cache_database(df)
     return df
@@ -158,12 +151,23 @@ def standard_scale_data(df, cache=False, verbose=False):
     if(verbose):   
         print("Standard scaling data...")
         print("Number of rows {}".format(len(df)))
-        check_duplicate_patient(df, verbose=True)
+        print("Data {}".format(df))
+        print("Data shape {}".format(df.shape))
+        print("Data type {}".format(type(df)))
+        
     if(cache):
         utils.cache_database(df)
     return df
 
-columns_to_remove = ['intime', 'outtime', 'dod', 'admittime', 'dischtime', 'deathtime', 'edregtime', 'edouttime', 'language', 'religion', 'diagnosis', 'ethnicity', 'dbsource']
+columns_to_remove = ['intime', 'outtime', 'dod', 
+                     'admittime', 'dischtime', 'deathtime', 
+                     'edregtime', 'edouttime', 'language', 'religion', 
+                     'ethnicity', 'dbsource']
+columns_to_binary_encode = ['gender']
+columns_to_frequency_encode = ['diagnosis']
+columns_to_one_hot_encode = ['marital_status', 'ethnicity_grouped', 'first_careunit', 
+                             'last_careunit', 'admission_type', 'admission_location', 
+                             'discharge_location', 'insurance']
 
 preprocessing_pipeline = [
     ('Check duplicate patients', check_duplicate_patient, {'cache': False, 'verbose': True}),
@@ -172,6 +176,11 @@ preprocessing_pipeline = [
     ('Aggregate repeated mean measurements', aggregate_repeated_mean_measuremenets, {'cache': False, 'verbose': True}),
     ('Remove unecessary columns', remove_unecessary_columns, {'columns_to_remove': columns_to_remove, 'cache': False, 'verbose': True}),
     ('Remove features with most null', remove_features_with_most_null, {'cache': False, 'verbose': True}),
+    ('Binary encoding', encode_binary, {'columns_to_encode': columns_to_binary_encode, 'cache': False, 'verbose': True}),
+    ('Frequency encoding', encode_frequency, {'columns_to_encode': columns_to_frequency_encode, 'cache': False, 'verbose': True}),
+    ('One-hot encode', encode_one_hot, {'columns_to_encode': columns_to_one_hot_encode, 'cache': False, 'verbose': True}),
+    ('Drop rows including null', drop_rows_including_null, {'cache': True, 'verbose': True}),
+    ('Standard scale data', standard_scale_data, {'cache': False, 'verbose': True}),
 ]
 
 def run_preprocessing_pipeline(df, pipeline=preprocessing_pipeline):
