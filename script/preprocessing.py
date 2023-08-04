@@ -163,11 +163,15 @@ def standard_scale_data(df, cache=False, verbose=False):
         utils.cache_database(df)
     return df
 
+columns_to_remove = ['intime', 'outtime', 'dod', 'admittime', 'dischtime', 'deathtime', 'edregtime', 'edouttime', 'language', 'religion', 'diagnosis', 'ethnicity', 'dbsource']
+
 preprocessing_pipeline = [
     ('Check duplicate patients', check_duplicate_patient, {'cache': False, 'verbose': True}),
     ('Get first ICU stay', get_first_icu_stay, {'cache': False, 'verbose': True}),
     ('Aggregate missing mean columns', aggregate_missing_mean_columns, {'cache': False, 'verbose': True}),
     ('Aggregate repeated mean measurements', aggregate_repeated_mean_measuremenets, {'cache': False, 'verbose': True}),
+    ('Remove unecessary columns', remove_unecessary_columns, {'columns_to_remove': columns_to_remove, 'cache': False, 'verbose': True}),
+    ('Remove features with most null', remove_features_with_most_null, {'cache': False, 'verbose': True}),
 ]
 
 def run_preprocessing_pipeline(df, pipeline=preprocessing_pipeline):
