@@ -83,13 +83,13 @@ def create_dataset(cursor, table_names):
     selected_columns = get_unique_columns(cursor, table_names)
     create_view(cursor, selected_columns, table_names, view_name="refined.base_dataset", foreign_key="icustay_id")
 
-def get_base_dataset(conn):
+def get_base_dataset(conn, dataset_name):
     """
         Description: Returns the base dataset
         conn: psycopg2 connection object
     """
     engine = create_engine(f"postgresql+psycopg2://", creator=lambda: conn)
-    df = pd.read_sql_query("SELECT * FROM refined.base_dataset", engine)
+    df = pd.read_sql_query(f"SELECT * FROM refined.{dataset_name}", engine)
     return df
 
 

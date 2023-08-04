@@ -4,7 +4,7 @@ import utils
 # import umap
 import pandas as pd
 import numpy as np
-import dataextraction as db
+import dataextraction as de
 # import matplotlib.pyplot as plt
 from sklearn.preprocessing import StandardScaler
 # from sklearn.decomposition import PCA
@@ -14,8 +14,8 @@ from sklearn.preprocessing import StandardScaler
 # import hdbscan
 
 def load_data():  
-    conn = db.connect_to_database()
-    df = db.get_base_dataset(conn)
+    conn = de.connect_to_database()
+    df = de.get_base_dataset(conn, "base_dataset_v2")
     return df
 
 def check_duplicate_patient(df, cache=False, verbose=False):    
@@ -67,6 +67,20 @@ def aggregate_repeated_mean_measuremenets(df, cache=False, verbose=False):
         print("Number of rows {}".format(len(df)))
         for col in df_aggregated.columns:
             print("Aggregated column {}".format(col))                    
+    if(cache):
+        utils.cache_database(df)        
+    return df
+
+def aggregate_score_to_mortality(df, cache=False, verbose=False):    
+    def map_lods(score):
+     logit = -3.4043 + 0.4173 * (score)
+     return (np.exp(logit)) / (1 + np.exp(logit)) 
+        
+    df['mr_lods'] = df['lods'].apply(map_lods)    
+    if(verbose):       
+        print("Aggregating score to mortality...")
+        print("Number of rows {}".format(len(df)))
+        print("Aggregated column mr_lods")
     if(cache):
         utils.cache_database(df)        
     return df
@@ -149,7 +163,6 @@ def standard_scale_data(df, cache=False, verbose=False):
     scaler = StandardScaler()
     df = scaler.fit_transform(df)
     if(verbose):   
-        print("Standard scaling data...")
         print("Number of rows {}".format(len(df)))
         print("Data {}".format(df))
         print("Data shape {}".format(df.shape))
@@ -158,6 +171,28 @@ def standard_scale_data(df, cache=False, verbose=False):
     if(cache):
         utils.cache_database(df)
     return df
+
+def map_mortality_rate_to_icu_level(df, cache=False, verbose=False):
+    def map_mortality_rate_to_level(mortality_rate):    
+        if 0 < mortality_rate < 0.33:
+            return 'Level 1'
+        elif 0.33 <= mortality_rate < 0.66:
+            return 'Level 2'
+        elif 0.66 <= mortality_rate < 0.99:
+            return 'Level 3'
+        else:
+            return 'Unknown'
+
+    df['icu_level'] = df['mr_lods'].apply(map_mortality_rate_to_level)
+    if(verbose):
+        print("Mapping mortality rate to ICU level...")
+        print("Number of rows {}".format(len(df)))
+        print("Mapped column icu_level")
+    if(cache):
+        utils.cache_database(df)
+    return df
+
+
 
 columns_to_remove = ['intime', 'outtime', 'dod', 
                      'admittime', 'dischtime', 'deathtime', 
@@ -179,8 +214,11 @@ preprocessing_pipeline = [
     ('Binary encoding', encode_binary, {'columns_to_encode': columns_to_binary_encode, 'cache': False, 'verbose': True}),
     ('Frequency encoding', encode_frequency, {'columns_to_encode': columns_to_frequency_encode, 'cache': False, 'verbose': True}),
     ('One-hot encode', encode_one_hot, {'columns_to_encode': columns_to_one_hot_encode, 'cache': False, 'verbose': True}),
-    ('Drop rows including null', drop_rows_including_null, {'cache': True, 'verbose': True}),
-    ('Standard scale data', standard_scale_data, {'cache': False, 'verbose': True}),
+    ('Drop rows including null', drop_rows_including_null, {'cache': False, 'verbose': True}),
+    ('Aggregate score to mortality', aggregate_score_to_mortality, {'cache': False, 'verbose': True}),
+    ('Map mortality rate to ICU level', map_mortality_rate_to_icu_level, {'cache': True, 'verbose': True}),
+    ('Check duplicate patients', check_duplicate_patient, {'cache': False, 'verbose': True}),
+    # ('Standard scale data', standard_scale_data, {'cache': False, 'verbose': True}),
 ]
 
 def run_preprocessing_pipeline(df, pipeline=preprocessing_pipeline):
@@ -188,6 +226,8 @@ def run_preprocessing_pipeline(df, pipeline=preprocessing_pipeline):
         print("\n\n")
         print("Running step {}".format(step_name))
         df = step_function(df, **step_params)
+    if(type(df) != type(pd.DataFrame())):
+        print("Warning, dataframe is not of type pandas.DataFrame")
     return df
 
 
