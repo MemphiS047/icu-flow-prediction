@@ -167,6 +167,7 @@ preprocessing_pipeline = [
     ('Check duplicate patients', check_duplicate_patient, {'cache': False, 'verbose': True}),
     ('Get first ICU stay', get_first_icu_stay, {'cache': False, 'verbose': True}),
     ('Aggregate missing mean columns', aggregate_missing_mean_columns, {'cache': False, 'verbose': True}),
+    ('Aggregate repeated mean measurements', aggregate_repeated_mean_measuremenets, {'cache': False, 'verbose': True}),
 ]
 
 def run_preprocessing_pipeline(df, pipeline=preprocessing_pipeline):
