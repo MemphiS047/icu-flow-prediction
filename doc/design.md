@@ -10,13 +10,9 @@ The flow of the development is divided into building the ML models, developing b
 **Solution**: We introduce a supportive machine learning model that will help doctors in the grey areas also model should be flexible for variations in ICU regulatory changes in the future. For the report generation and more suitable ICU management solutions we propose a software system that could be generalized to rest of the ICU wards named "heartbeat" where it includes a set of choices refined for the related regulations this software could be generalized in terms of the UI elements, it should be user friendly and efficient for doctors and healthcare professionals but most importantly it should be "plug-and-run" style such that it should be easily configurable to different hospitals, and regulatory systems.
 
 **Research Questions**
-1. How can machine learning models be applied to assist doctors in the decision-making process for ICU admissions, particularly in cases where the regulations are unclear or flexible?
-
 2. What features and data sources can be used to develop a machine learning model that accurately predicts the appropriate ICU level for patients?
 
 3. How can the machine learning model be designed to accommodate potential variations in the number of ICU levels, allowing for future scalability and flexibility?
-
-4. What is the impact of implementing the proposed machine learning model on achieving a more balanced distribution of patients across ICU levels in Turkey?
 
 5. What are the financial implications and cost savings associated with implementing the machine learning model in terms of government insurance payments for hospitals and patients?
 
@@ -40,6 +36,8 @@ The flow of the development is divided into building the ML models, developing b
 5.  Distinction could be made between PICU, NICU and other ICU types as well and benefits of it could be explained in the paper
 
 6. We can some advacned explanability methodologies on the model to help with the insurance reporting
+
+7. More aggregatable measurements such as ICD9 codes and elixhouser records
 
 # Preprocessing
 The prerpocessing phase is formed of several steps, first data extraction, we extract related tables from MIMIC-III, these tables are not just randomaly picked but rather finalzied on extensive literature review and from the related features that correpsonds to the features in the MIMIC-III's related tables, once the initial dataset is formed we apply set of exclusion criterias for 3 reasons:

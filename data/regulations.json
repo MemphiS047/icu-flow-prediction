@@ -1,0 +1,45 @@
+{
+  "data": [
+    {
+      "country": "TUR",
+      "type": "NICU",
+      "regulations": [
+        {
+          "level": "1",
+          "value": "Newborns with one or more of the following conditions are followed at this level. 1-Failure to maintain body temperature, 2-Delayed prematurity, cleft palate/lip, maternal drug effect or postpartum maternal medical problem due to malnutrition difficulties, 3-Hypoglycemia that does not improve with enteral nutrition, Parenteral therapy for less than 24 hours Requires glucose support, 4-Phototherapy is required (major risk group (*) or needs phototherapy treatment), 5-Free flow oxygen support for up to twenty-four hours and respiratory distress should be monitored with a monitor or pulseoximetry, 6- High - level newborns newborns who need to be followed up and treated until they are transferred to the intensive care unit."
+        },
+        {
+          "level": "2",
+          "value": "Health Service to be Provided Newborns with one or more of the following conditions are followed at this level. 1-Failure to maintain body temperature, 2-Delayed prematurity, cleft palate/lip, maternal drug effect or postpartum maternal medical problem due to malnutrition difficulties, 3-Hypoglycemia that does not improve with enteral nutrition, Parenteral therapy for less than 24 hours Requires glucose support, 4-Phototherapy is required (major risk group (*) or needs phototherapy treatment), 5-Free flow oxygen support for up to twenty-four hours and respiratory distress should be monitored with a monitor or pulseoximetry, 6- High - level newborns newborns who need to be followed up and treated until they are transferred to the intensive care unit. In addition to the 1st level; 1- Newborns whose body weight is between 1500-2500 grams and who have any of the following; a ) Those who cannot maintain their body temperature b) Those who have hypoglycemia c) Those who have insufficient oral nutrition ç) Those who have tachypnea or respiratory distress, 2- Newborns whose body weight is over 2500 g, who receive oxygen therapy for more than 24 hours or whose hypoglycemia continues for more than 24 hours, 3- Newborns whose body weight is over 1500 g and who received oxygen therapy for more than 24 hours or who underwent nasal ventilation (nasal CPAP, nasal SIMV, etc.), 4-Central venous injections with a body weight above 2500 g catheter etc. Newborns undergoing minor surgery, 5-Body weight over 1500 g, undergoing complete or partial exchange transfusion, or intravenously administered for hemolytic jaundice Newborns given immunoglobulin therapy, 6- All newborns treated for medical or interventional arrhythmia, 7- Newborns who no longer need high-level intensive care, 8- Newborns followed up until they are transferred to the high-level neonatal intensive care unit , 9-Two or more The following infants without major organ failure or who do not need invasive mechanical ventilation or need surgery are followed at Level 2: Sepsis , meningitis, TORCH infections, urinary tract, skin, etc. infections, metabolic , hematological, cardiac, renal , gastrointestinal (except Stage III-IV NEC), endocrine, etc. with other system diseases or congenital anomalies ( preop or postop ) newborns, 10-2. Retinopathy (ROP) examination should be provided in newborns with indications at the level (at the bedside or by referral to the relevant health facility). In addition to the 2nd level; 1- All newborns with a body weight of less than 1500 g with or without the need for invasive or non-invasive mechanical ventilation , 2- All newborns with two or more organ dysfunctions that require circulatory support, regardless of gestational week and body weight, 3 - All newborns undergoing invasive mechanical ventilation , regardless of gestational week and body weight , 4-Central venous ventilation with a birth weight of 1500-2500 g catheter etc. Newborns undergoing minor surgical intervention such as, 5- Newborns undergoing peritoneal dialysis or hemofiltration , 6-Hypothermia treatment (**), 7- Newborns followed up until their transfer to a high-level neonatal intensive care service, 8-Retinopathy (ROP) examination, treatment of diagnosed cases in the same institution or in another institution . 9-Placing a thorax tube, 10- Echocardiographic examination can be done (**). In addition to the 3rd level; 1- Newborns undergoing major surgery (****) regardless of gestational week or body weight (**) (This group of patients is considered to be Level 4 during the period of intubated mechanical ventilation , and Level 3 if not intubated ). 2- Retinopathy (ROP) examination and treatment in the healthcare facility , 3- Hypothermia treatment in the healthcare facility (service can be purchased), 4- Inhaled nitric oxide treatment in the healthcare facility (service can be purchased) 5- Amplitude EEG monitoring can be performed in the healthcare facility . In addition to 4A Level; 1- ECMO treatment in the health facility, 2- Vitrectomy treatment in the healthcare facility , 3- All kinds of major surgical operations (****) can be performed in the healthcare facility, 4- Complex congenital heart diseases, interventional and surgical procedures can be performed in the healthcare facility."
+        },
+        {
+          "level": "3",
+          "value": "In addition to the 2nd level; 1- All newborns with a body weight of less than 1500 g with or without the need for invasive or non-invasive mechanical ventilation , 2- All newborns with two or more organ dysfunctions that require circulatory support, regardless of gestational week and body weight, 3 - All newborns undergoing invasive mechanical ventilation , regardless of gestational week and body weight , 4-Central venous ventilation with a birth weight of 1500-2500 g catheter etc. Newborns undergoing minor surgical intervention such as, 5- Newborns undergoing peritoneal dialysis or hemofiltration , 6-Hypothermia treatment (**), 7- Newborns followed up until their transfer to a high-level neonatal intensive care service, 8-Retinopathy (ROP) examination, treatment of diagnosed cases in the same institution or in another institution . 9-Placing a thorax tube, 10- Echocardiographic examination can be done (**)."
+        },
+        {
+          "level": "4A",
+          "value": "In addition to the 3rd level; 1- Newborns undergoing major surgery (****) regardless of gestational week or body weight (**) (This group of patients is considered to be Level 4 during the period of intubated mechanical ventilation , and Level 3 if not intubated ). 2- Retinopathy (ROP) examination and treatment in the healthcare facility , 3- Hypothermia treatment in the healthcare facility (service can be purchased), 4- Inhaled nitric oxide treatment in the healthcare facility (service can be purchased) 5- Amplitude EEG monitoring can be performed in the healthcare facility."
+        },
+        {
+          "level": "4B",
+          "value": "In addition to 4A Level; 1- ECMO treatment in the health facility, 2- Vitrectomy treatment in the healthcare facility , 3- All kinds of major surgical operations (****) can be performed in the healthcare facility, 4- Complex congenital heart diseases, interventional and surgical procedures can be performed in the healthcare facility."
+        }
+      ]
+    },
+    {
+      "country": "TUR",
+      "type": "PICU",
+      "regulations": []
+    },
+    {
+        "country": "UK",
+        "type": "NICU",
+        "regulations": []
+    },
+    {
+        "country": "USA",
+        "type": "PICU",
+        "regulations": []
+    }
+  ]
+}

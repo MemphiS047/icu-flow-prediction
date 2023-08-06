@@ -8,7 +8,7 @@ TODO.md
 /doc/regulations
 
 # Ignore datasets
-/data
+# /data
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

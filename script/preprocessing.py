@@ -21,7 +21,8 @@ def load_data():
 def check_duplicate_patient(df, cache=False, verbose=False):    
     duplicate_num = df['subject_id'].duplicated().sum()
     if(duplicate_num > 0):
-        if(verbose):            
+        if(verbose):
+            print(f"Shape of the dataset {df.shape}")            
             print("Getting duplicate subjects...")
             print("Number of duplicate subjects {}".format(duplicate_num))
         if(cache):
@@ -32,7 +33,8 @@ def check_duplicate_patient(df, cache=False, verbose=False):
 
 def get_first_icu_stay(df, cache=False, verbose=False):    
     df = df[df['first_icu_stay'] == True]
-    if(verbose):        
+    if(verbose):
+        print(f"Shape of the dataset {df.shape}")        
         print("Getting first ICU stay...")
         print("Number of rows {}".format(len(df)))
     if(cache):
@@ -42,7 +44,8 @@ def get_first_icu_stay(df, cache=False, verbose=False):
 def aggregate_missing_mean_columns(df, cache=False, verbose=False):
     missing_mean_columns = utils.detect_missing_mean_columns(df)
     df = utils.add_missing_mean_columns(df, missing_mean_columns)
-    if(verbose):       
+    if(verbose):
+        print(f"Shape of the dataset {df.shape}")       
         print("Aggregating missing mean columns...")
         print("Number of rows {}".format(len(df)))
         for col in missing_mean_columns:
@@ -62,7 +65,8 @@ def aggregate_repeated_mean_measuremenets(df, cache=False, verbose=False):
     other_columns = [col for col in df.columns if('_mean' not in col and '_min' not in col and '_max' not in col)]
     df_other_columns = df.groupby('subject_id', as_index=False)[other_columns].first()
     df = pd.merge(df_aggregated, df_other_columns, on='subject_id')
-    if(verbose):       
+    if(verbose):
+        print(f"Shape of the dataset {df.shape}")       
         print("Aggregating repeated mean measurements...")
         print("Number of rows {}".format(len(df)))
         for col in df_aggregated.columns:
@@ -77,7 +81,8 @@ def aggregate_score_to_mortality(df, cache=False, verbose=False):
      return (np.exp(logit)) / (1 + np.exp(logit)) 
         
     df['mr_lods'] = df['lods'].apply(map_lods)    
-    if(verbose):       
+    if(verbose):
+        print(f"Shape of the dataset {df.shape}")       
         print("Aggregating score to mortality...")
         print("Number of rows {}".format(len(df)))
         print("Aggregated column mr_lods")
@@ -87,7 +92,8 @@ def aggregate_score_to_mortality(df, cache=False, verbose=False):
 
 def remove_unecessary_columns(df, columns_to_remove, cache=False, verbose=False):    
     df = df.drop(columns_to_remove, axis=1)
-    if(verbose):   
+    if(verbose):
+        print(f"Shape of the dataset {df.shape}")   
         print("Removing unecessary columns...")
         print("Number of rows {}".format(len(df)))
         for col in columns_to_remove:
@@ -105,7 +111,8 @@ def remove_features_with_most_null(df, cache=False, verbose=False):
     if(columns_to_remove == []):
         print("No columns to remove")
     df = df.drop(columns_to_remove, axis=1)
-    if(verbose):      
+    if(verbose):
+        print(f"Shape of the dataset {df.shape}")      
         print("Removing features with most null...")
         print("Number of rows {}".format(len(df)))
         for col in columns_to_remove:
@@ -117,7 +124,8 @@ def remove_features_with_most_null(df, cache=False, verbose=False):
 def encode_binary(df, columns_to_encode, cache=False, verbose=False):
     for col in columns_to_encode:
         df[col] = df[col].map({'M': 0, 'F': 1})
-    if(verbose):  
+    if(verbose):
+        print(f"Shape of the dataset {df.shape}")  
         print("Encoding binary...")
         print("Number of rows {}".format(len(df)))
         for col in columns_to_encode:
@@ -131,6 +139,7 @@ def encode_frequency(df, columns_to_encode, cache=False, verbose=False):
         frequency_mapping = df[col].value_counts(normalize=True)
         df[col] = df[col].map(frequency_mapping)
     if(verbose):
+        print(f"Shape of the dataset {df.shape}")
         print("Encoding frequency...")
         print("Number of rows {}".format(len(df)))
         for col in columns_to_encode:
@@ -141,7 +150,8 @@ def encode_frequency(df, columns_to_encode, cache=False, verbose=False):
 
 def encode_one_hot(df, columns_to_encode, cache=False, verbose=False):
     df = pd.get_dummies(df, columns=columns_to_encode)
-    if(verbose):      
+    if(verbose):
+        print(f"Shape of the dataset {df.shape}")      
         print("Encoding one hot...")
         print("Number of rows {}".format(len(df)))
         for col in columns_to_encode:
@@ -153,6 +163,7 @@ def encode_one_hot(df, columns_to_encode, cache=False, verbose=False):
 def drop_rows_including_null(df, cache=False, verbose=False):
     df = df.dropna()
     if(verbose):
+        print(f"Shape of the dataset {df.shape}")
         print("Dropping rows including null...")
         print("Number of rows {}".format(len(df)))
     if(cache):
@@ -162,7 +173,8 @@ def drop_rows_including_null(df, cache=False, verbose=False):
 def standard_scale_data(df, cache=False, verbose=False):
     scaler = StandardScaler()
     df = scaler.fit_transform(df)
-    if(verbose):   
+    if(verbose):
+        print(f"Shape of the dataset {df.shape}")   
         print("Number of rows {}".format(len(df)))
         print("Data {}".format(df))
         print("Data shape {}".format(df.shape))
@@ -185,6 +197,7 @@ def map_mortality_rate_to_icu_level(df, cache=False, verbose=False):
 
     df['icu_level'] = df['mr_lods'].apply(map_mortality_rate_to_level)
     if(verbose):
+        print(f"Shape of the dataset {df.shape}")
         print("Mapping mortality rate to ICU level...")
         print("Number of rows {}".format(len(df)))
         print("Mapped column icu_level")
@@ -214,9 +227,9 @@ preprocessing_pipeline = [
     ('Binary encoding', encode_binary, {'columns_to_encode': columns_to_binary_encode, 'cache': False, 'verbose': True}),
     ('Frequency encoding', encode_frequency, {'columns_to_encode': columns_to_frequency_encode, 'cache': False, 'verbose': True}),
     ('One-hot encode', encode_one_hot, {'columns_to_encode': columns_to_one_hot_encode, 'cache': False, 'verbose': True}),
-    ('Drop rows including null', drop_rows_including_null, {'cache': False, 'verbose': True}),
-    ('Aggregate score to mortality', aggregate_score_to_mortality, {'cache': False, 'verbose': True}),
-    ('Map mortality rate to ICU level', map_mortality_rate_to_icu_level, {'cache': True, 'verbose': True}),
+    ('Drop rows including null', drop_rows_including_null, {'cache': True, 'verbose': True}),
+    # ('Aggregate score to mortality', aggregate_score_to_mortality, {'cache': False, 'verbose': True}),
+    # ('Map mortality rate to ICU level', map_mortality_rate_to_icu_level, {'cache': True, 'verbose': True}),
     ('Check duplicate patients', check_duplicate_patient, {'cache': False, 'verbose': True}),
     # ('Standard scale data', standard_scale_data, {'cache': False, 'verbose': True}),
 ]
